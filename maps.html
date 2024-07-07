@@ -1,3 +1,4 @@
+<!----
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,3 +40,179 @@
     </script>
 </body>
 </html>
+!-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jalandhar Disaster Management Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+        #form {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Jalandhar Disaster Management Map</h3>
+    <div id="form">
+        <label for="severity">Select Severity to Highlight:</label>
+        <select id="severity">
+            <option value="all">All</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+        </select>
+        <button onclick="highlightSeverity()">Highlight Selected Severity</button>
+    </div>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map and set its view to Jalandhar
+        var map = L.map('map').setView([31.3260, 75.5762], 12); // Latitude and Longitude of Jalandhar
+
+        // Load and display tile layer from OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Function to get color based on severity
+        function getColor(severity) {
+            return severity === 'high' ? 'red' :
+                   severity === 'medium' ? 'orange' :
+                   severity === 'low' ? 'green' :
+                   'blue'; // default
+        }
+
+        // Example affected areas in Jalandhar
+        var affectedAreas = [
+            {lat: 31.3260, lng: 75.5762, severity: 'high', description: 'High severity - Central Jalandhar'},
+            {lat: 31.3300, lng: 75.5800, severity: 'medium', description: 'Medium severity - Model Town'},
+            {lat: 31.3200, lng: 75.5700, severity: 'low', description: 'Low severity - Lajpat Nagar'}
+        ];
+
+        // Add all markers to the map
+        var markers = [];
+        affectedAreas.forEach(function(area) {
+            var marker = L.circle([area.lat, area.lng], {
+                color: getColor(area.severity),
+                fillColor: getColor(area.severity),
+                fillOpacity: 0.5,
+                radius: 1000 // Smaller radius for city-level detail
+            }).addTo(map)
+            .bindPopup(area.description);
+
+            markers.push(marker);
+        });
+
+        // Function to highlight selected severity
+        function highlightSeverity() {
+            var selectedSeverity = document.getElementById('severity').value;
+
+            markers.forEach(function(marker, index) {
+                var area = affectedAreas[index];
+                if (selectedSeverity === 'all' || area.severity === selectedSeverity) {
+                    marker.setStyle({fillOpacity: 0.7, weight: 3, display: 'block'});
+                } else {
+                    marker.setStyle({fillOpacity: 0.2, weight: 1, display: 'none'});
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
